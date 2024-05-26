@@ -9,7 +9,7 @@ from sklearn.preprocessing import OneHotEncoder,StandardScaler
 from src.exception import CustomException
 from src.logger import logging
 import os
-from scipy.sparse import csr_matrix
+from scipy.sparse import csr_matrix, hstack
 from src.utils import save_object
 
 @dataclass
@@ -38,7 +38,7 @@ class DataTransformation:
             cat_pipeline = Pipeline(
                 steps=[
                      ("imputer",SimpleImputer(strategy="most_frequent")),
-                     ("onehotencoder",OneHotEncoder()),
+                     ("onehotencoder",OneHotEncoder(handle_unknown='ignore',sparse_output=True)),
                      ("scaler",StandardScaler(with_mean=False))
                 ]
             )
